@@ -1,0 +1,25 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newStorageAccountName": {
+      "value": "mystorage001"
+    },
+    "vmName": {
+        "value": "myVM001"
+    },
+    "adminUsername": {
+      "value": "test"
+    },
+    "adminPassword": {
+      "value": "test"  
+    },
+    "dnsNameForPublicIP": {
+      "value": "mydns001"
+    },
+    "windowsOSVersion": {
+      "value": "2016-Datacenter"
+    }
+  }
+}
+
