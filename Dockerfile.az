@@ -1,0 +1,30 @@
+FROM ubuntu:20.04
+MAINTAINER yungez@microsoft.com
+LABEL description="this image is Azure CLI dev environment."
+
+# install tools: git
+RUN apt-get update  && \
+    apt-get install -y git
+
+# install python
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get install -y python3.8 && \
+    apt-get install -y python3-pip && \
+    apt-get install -y python3-venv
+
+# upgrade pip to latest
+RUN pip3 install --upgrade pip
+
+# clone cli repos from fork: cli, cli-extensions
+# TODO: map local repos to container
+RUN git clone https://github.com/yungezz/azure-cli.git
+RUN git clone https://github.com/yungezz/azure-cli-extensions.git
+
+# setup venv, azdev setup
+RUN python3 -m venv venv
+RUN . ./venv/bin/activate && pip3 install azdev && azdev setup --cli ./azure-cli --repo ./azure-cli-extensions
+
+# clean
+RUN apt-get clean
